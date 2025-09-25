@@ -16,7 +16,7 @@ console.log(`Sistema: ${nome_sistema} | Exemplo de conversão: ${numeroStr} -> $
 class Pessoa {
   constructor(id, nome, cpf) {
     this.id = id;
-    this.nome;
+    this.nome = nome;
     this.cpf = cpf;
   }
 }
