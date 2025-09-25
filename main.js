@@ -149,6 +149,12 @@ const especializacaoExemplo = {
 class Sistema {
   constructor() {
     this.pacientes = [];
+    this.medicos = [];
+    this.clinicas = [];
+    this.consultas = [];
+    this.especializacoes = [];
+    this.enderecos = [];
+    this.proximoId = 1;
   }
 
   carregarDadosIniciais() {
