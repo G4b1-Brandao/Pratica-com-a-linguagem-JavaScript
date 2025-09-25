@@ -1,3 +1,6 @@
+
+/*
+
 // Declaração de variáveis 
 let cont = 0; // let pode ser reatribuído
 const nome_sistema = "Gestão Clínica"; // const não pode ser reatribuído
@@ -11,6 +14,8 @@ let numeroStr = "42";
 let numeroConvertido = Number(numeroStr); // string -> number
 
 console.log(`Sistema: ${nome_sistema} | Exemplo de conversão: ${numeroStr} -> ${numeroConvertido}`);
+
+*/
 
 // Entidades
 class Pessoa {
@@ -32,12 +37,113 @@ class Paciente extends Pessoa {
   }
 }
 
+// Entidade Endereço
+class Endereco {
+  constructor(id, logradouro, bairro, cidade, cep) {
+    this.id = id;
+    this.logradouro = logradouro;
+    this.bairro = bairro;
+    this.cidade = cidade;
+    this.cep = cep;
+  }
+
+  toString() {
+    return `${this.logradouro}, ${this.bairro}, ${this.cidade} - CEP: ${this.cep}`;
+  }
+}
+
+// Entidade Clínica
+class Clinica {
+  constructor(id, nome, endereco) {
+    this.id = id;
+    this.nome = nome;
+    this.endereco = endereco; // relação 1:1 com Endereco
+  }
+
+  toString() {
+    return `[Clínica] ${this.nome}, Endereço: ${this.endereco.toString()}`;
+  }
+}
+
+// Entidade Especialização
+class Especializacao {
+  constructor(id, nome, descricao) {
+    this.id = id;
+    this.nome = nome;
+    this.descricao = descricao;
+  }
+
+  toString() {
+    return `[Especialização] ${this.nome} - ${this.descricao}`;
+  }
+}
+
+// Entidade Médico (Pessoa)
+class Medico extends Pessoa {
+  constructor(id, nome, cpf, crm, especializacoes = []) {
+    super(id, nome, cpf);
+    this.crm = crm;
+    this.especializacoes = especializacoes; // relação 1..N
+  }
+
+  adicionarEspecializacao(especializacao) {
+    this.especializacoes.push(especializacao);
+  }
+
+  toString() {
+    let especs = this.especializacoes.map(e => e.nome).join(", ");
+    return `[Médico] ID: ${this.id}, Nome: ${this.nome}, CRM: ${this.crm}, Especializações: ${especs}`;
+  }
+}
+
+// Entidade Consulta
+class Consulta {
+  constructor(id, medico, paciente, clinica, data, hora) {
+    this.id = id;
+    this.medico = medico;
+    this.paciente = paciente;
+    this.clinica = clinica;
+    this.data = data;
+    this.hora = hora;
+  }
+
+  toString() {
+    return `[Consulta] Paciente: ${this.paciente.nome}, Médico: ${this.medico.nome}, Clínica: ${this.clinica.nome}, Data: ${this.data} ${this.hora}`;
+  }
+}
+
+
+/* 
+
+// --- Exemplo de uso ---
+const endereco1 = new Endereco(1, "Rua A", "Centro", "Fortaleza", "60000-000");
+const clinica1 = new Clinica(1, "Clínica Saúde", endereco1);
+
+const espec1 = new Especializacao(1, "Cardiologia", "Cuida do coração");
+const espec2 = new Especializacao(2, "Ortopedia", "Cuida dos ossos");
+
+const medico1 = new Medico(1, "Dr. João", "12345678901", "CRM-CE1234");
+medico1.adicionarEspecializacao(espec1);
+medico1.adicionarEspecializacao(espec2);
+
+const paciente1 = new Paciente(2, "Maria Silva", "98765432100", "85999998888");
+
+const consulta1 = new Consulta(1, medico1, paciente1, clinica1, "2025-09-25", "14:30");
+
+console.log(clinica1.toString());
+console.log(medico1.toString());
+console.log(paciente1.toString());
+console.log(consulta1.toString());
+
+
 // Objeto em notação literal
 const especializacaoExemplo = {
   id: 1,
   nome: "Cardiologia",
   descricao: "Cuida do coração"
 };
+
+*/
 
 // Sistema 
 class Sistema {
